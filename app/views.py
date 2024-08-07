@@ -24,7 +24,7 @@ def login(request):
 # User registration view
 def register(request):
     if request.method == 'POST':
-        errors = models.User.objects.register_validator(request.POST)
+        errors = User.objects.register_validator(request.POST)
         if errors:
             for key, value in errors.items():
                 messages.error(request, value)
@@ -153,3 +153,12 @@ def logout_user(request):
     logout(request)
     messages.success(request, "You have been logged out successfully.")
     return redirect('/')
+
+def about_us(request):
+    return render(request, 'about_us.html')
+
+def terms_of_use(request):
+    return render(request, 'terms.html')
+
+def privacy_policy(request):
+    return render(request, 'privacy_policy.html')

@@ -17,3 +17,25 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
+
+$(document).ready(function () {
+    var passwordField = $('#password');
+    var confirmPasswordField = $('#confirm_password');
+    var message = $('#passwordMatchMessage');
+
+    // Check if passwords match while typing
+    function checkPasswords() {
+        var password = passwordField.val();
+        var confirmPassword = confirmPasswordField.val();
+
+        if (password === confirmPassword) {
+            message.text("Passwords match").css('color', 'green');
+        } else {
+            message.text("Passwords do not match!").css('color', 'red');
+        }
+    }
+
+    passwordField.on('input', checkPasswords);
+    confirmPasswordField.on('input', checkPasswords);
+});
+

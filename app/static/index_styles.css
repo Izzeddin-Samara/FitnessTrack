@@ -25,13 +25,16 @@ body {
 }
 
 .left-section h1 {
-    color: black;
     font-size: 48px;
     margin-bottom: 20px;
 }
 
-.left-section p {
-    font-size: 24px;
+#fit {
+    color: blue;
+}
+
+#par {
+    font-size: large;
     color: #1c1e21;
 }
 
@@ -101,9 +104,10 @@ body {
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 300px; /* smaller width */
+    width: 450px; /* smaller width */
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin-top: 50px;
 }
 
 .close {
@@ -183,16 +187,4 @@ footer {
 
 .footer-container a:hover {
     text-decoration: underline;
-}
-
-h1 {
-    color: yellow;
-}
-
-#fit {
-    color: blue;
-}
-
-#par {
-    font-size: large;
 }

@@ -1,0 +1,94 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    color: #333;
+}
+
+header {
+    background: black;
+    color: #fff;
+    padding: 1rem 2rem;
+    text-align: left;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: normal;
+}
+
+main {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 2rem auto;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out;
+}
+
+main:hover {
+    transform: scale(1.02);
+}
+
+h2 {
+    border-bottom: 2px solid blue;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    color: blue;
+}
+
+ul {
+    margin-left: 1.5rem;
+    list-style-type: disc;
+}
+
+p, ul, li {
+    margin-bottom: 1rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+section {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+ul li::before {
+    content: '✓';
+    color:  blue;
+    margin-right: 0.5rem;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background: #333;
+    color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+a {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
