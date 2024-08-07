@@ -17,6 +17,7 @@ body {
     max-width: 1200px; /* Increased width for larger container */
     width: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
 }
 
 .header {
@@ -136,6 +137,9 @@ body.leave-review, body.update-review {
     max-width: 600px;
     width: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
 .review-container h1, .session-container h1 {
@@ -172,6 +176,10 @@ body.leave-review, body.update-review {
 
 .review-container button:hover, .session-container button:hover {
     background-color: #0056b3;
+}
+#logout-button {
+    margin-left: 10px;
+    margin-bottom: 10px;
 }
 
 /* Responsive adjustments */

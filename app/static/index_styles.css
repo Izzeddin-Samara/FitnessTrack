@@ -6,7 +6,6 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background: url("/static/images/sneakers-dumbbells-sport-fitness-healthy-lifestyle_645697-6850.avif") no-repeat center center fixed;
     background-size: cover; /* Adjust background size to cover the entire page */
 }
 

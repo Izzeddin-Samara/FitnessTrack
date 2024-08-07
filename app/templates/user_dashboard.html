@@ -12,8 +12,6 @@
     <header class="header">
         <h1>FitnessTrack</h1>
         <div class="user-info">
-            <img src="{% static 'images/user_icon.jpg' %}" alt="User Icon">
-            <span>{{ user.first_name }}</span>
             <form method="post" action="{% url 'logout_user' %}" style="display: inline;">
                 {% csrf_token %}
                 <button type="submit" id="logout-button">Logout <i class="fas fa-sign-out-alt"></i></button>

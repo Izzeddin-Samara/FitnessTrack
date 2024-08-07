@@ -6,16 +6,15 @@
     <title>Create Session</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome for icons -->
 </head>
 <body class="create-session">
     <header class="header">
         <h1>FitnessTrack</h1>
         <div class="user-info">
-            <img src="{% static 'images/user_icon.png' %}" alt="User Icon">
-            <span>{{ user.first_name }}</span>
             <form method="post" action="{% url 'logout_user' %}" style="display: inline;">
                 {% csrf_token %}
-                <button type="submit" class="logout-button">Logout</button>
+                <button type="submit" id="logout-button">Logout <i class="fas fa-sign-out-alt"></i></button>
             </form>
         </div>
     </header>
