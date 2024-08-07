@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Session</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body class="update-session">
+    <header class="header">
+        <h1>FitnessTrack</h1>
+        <div class="user-info">
+            <img src="{% static 'images/user_icon.png' %}" alt="User Icon">
+            <span>{{ user.first_name }}</span>
+            <form method="post" action="{% url 'logout_user' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">Logout</button>
+            </form>
+        </div>
+    </header>
+    <div class="container">
+        <h1>Update Session with Coach {{ coach_name }}</h1>
+        <form method="post" action="{% url 'update_session' session.id %}">
+            {% csrf_token %}
+            <label for="date">Date:</label>
+            <input type="date" name="date" value="{{ session.date }}" required>
+
+            <label for="duration">Duration:</label>
+            <select name="duration" required>
+                <option value="7:00 AM - 7:30 AM" {% if session.duration == '7:00 AM - 7:30 AM' %}selected{% endif %}>7:00 AM - 7:30 AM</option>
+                <option value="7:30 AM - 8:00 AM" {% if session.duration == '7:30 AM - 8:00 AM' %}selected{% endif %}>7:30 AM - 8:00 AM</option>
+                <!-- Add more durations as needed -->
+            </select>
+
+            <button type="submit">Update Session</button>
+        </form>
+    </div>
+</body>
+</html>

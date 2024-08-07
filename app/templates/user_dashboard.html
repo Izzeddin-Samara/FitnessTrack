@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome for icons -->
+</head>
+<body class="user-dashboard">
+    <header class="header">
+        <h1>FitnessTrack</h1>
+        <div class="user-info">
+            <img src="{% static 'images/user_icon.jpg' %}" alt="User Icon">
+            <span>{{ user.first_name }}</span>
+            <form method="post" action="{% url 'logout_user' %}" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" id="logout-button">Logout <i class="fas fa-sign-out-alt"></i></button>
+            </form>
+        </div>
+    </header>
+    <div class="container">
+        <h1>Welcome, {{ user.first_name }}!</h1>
+        <div class="main-content">
+            <section class="sessions-section">
+                <h2>Your Sessions <i class="fas fa-calendar-alt"></i></h2>
+                <ul class="session-list">
+                    {% for session in user_sessions %}
+                        <li>
+                            <p>{{ session.coach.first_name }} {{ session.coach.last_name }}</p>
+                            <p>{{ session.date }} - {{ session.duration }}</p>
+                            <a href="{% url 'update_session' session.id %}"><button>Update Session <i class="fas fa-edit"></i></button></a>
+                            <a href="{% url 'delete_session' session.id %}"><button>Delete Session <i class="fas fa-trash-alt"></i></button></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <section class="reviews-section">
+                <h2>Your Reviews <i class="fas fa-comments"></i></h2>
+                <ul class="review-list">
+                    {% for review in user_reviews %}
+                        <li>
+                            <p>{{ review.coach.first_name }} {{ review.coach.last_name }}</p>
+                            <p>{{ review.content }}</p>
+                            <a href="{% url 'update_review' review.id %}"><button>Update Review <i class="fas fa-edit"></i></button></a>
+                            <a href="{% url 'delete_review' review.id %}"><button>Delete Review <i class="fas fa-trash-alt"></i></button></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <section class="coaches-section">
+                <h2>Available Coaches <i class="fas fa-users"></i></h2>
+                <ul class="coach-list">
+                    {% for coach in all_the_coaches %}
+                        <li>
+                            <h3>{{ coach.first_name }} {{ coach.last_name }}</h3>
+                            <p>{{ coach.bio }}</p>
+                            <a href="{% url 'new_session' coach.id %}"><button>Book Session <i class="fas fa-calendar-plus"></i></button></a>
+                            <a href="{% url 'review_form' coach.id %}"><button>Leave Review <i class="fas fa-comment-alt"></i></button></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+    </div>
+</body>
+</html>
