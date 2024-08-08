@@ -79,3 +79,5 @@ def get_coach(coach_id):
 
 def show_all_coaches(request):
     return Coach.objects.all()
+
+

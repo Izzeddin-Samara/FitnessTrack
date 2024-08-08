@@ -44,7 +44,7 @@ def register(request):
 def user_dashboard(request):
     if 'userid' in request.session:
         user_id = request.session['userid']
-        user = User.objects.get(id=user_id)
+        user = models.get_user(user_id)
         user_sessions = Session.objects.filter(user=user).select_related('coach')
         user_reviews = Review.objects.filter(user=user).select_related('coach')
         all_the_coaches = Coach.objects.all()
