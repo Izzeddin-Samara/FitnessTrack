@@ -99,23 +99,17 @@ def review_form(request, coach_id):
 # Create review view
 def create_review(request, coach_id):
     if request.method == 'POST':
-        user_id = request.session['userid']
-        content = request.POST['content']
-        
-        coach = models.get_coach(coach_id)
-        user = models.get_user(user_id)
+        request.session['coachid'] = coach_id
         
         # Check if the review already exists
-        existing_review = Review.objects.filter(coach=coach, user=user).first()
-        if existing_review:
+        existing_review_instance = models.existing_review(request)
+        if existing_review_instance:
             messages.error(request, "You have already reviewed this coach.")
             return redirect(f'/review_form/{coach_id}')
         
-        review = models.Review.objects.create(
-            coach=coach,
-            user=user,
-            content=content
-        )
+        # If review does not exist, add a new review
+        models.add_review(request)
+        coach = models.get_coach(coach_id)
         messages.success(request, f"Review submitted successfully for coach {coach.first_name} {coach.last_name}")
         return redirect('/user_dashboard')
     return redirect('/')

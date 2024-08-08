@@ -27,5 +27,15 @@
             <button type="submit">Submit Review</button>
         </form>
     </div>
+    <section class="reviews-section">
+        <h2>Reviews for Coach {{ coach_name }}</h2>
+        <ul class="review-list">
+            {% for review in reviews %}
+                <li>
+                    <p><strong>{{ review.user.first_name }} {{ review.user.last_name }}</strong>: {{ review.content }} ({{ review.updated_at }})</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
 </body>
 </html>

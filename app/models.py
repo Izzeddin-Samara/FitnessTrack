@@ -99,6 +99,22 @@ def create_session(request):
     session = Session.objects.create(date=date, duration=duration, user=user, coach=coach)
     return session
 
+def add_review(request):
+    user_id = request.session['userid']
+    coach_id = request.session['coachid']
+    content = request.POST['content']
+    user = get_object_or_404(User, id=user_id)
+    coach = get_object_or_404(Coach, id=coach_id)
+    review = Review.objects.create(content=content, user=user, coach=coach)
+    return review
+
+def existing_review(request):
+    user_id = request.session['userid']
+    coach_id = request.session['coachid']
+    user = get_object_or_404(User, id=user_id)
+    coach = get_object_or_404(Coach, id=coach_id)
+    return Review.objects.filter(coach=coach, user=user).first()
+
 
     
 
