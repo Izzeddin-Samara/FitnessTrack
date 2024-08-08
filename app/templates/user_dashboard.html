@@ -41,7 +41,7 @@
                     {% for review in user_reviews %}
                         <li>
                             <p>{{ review.coach.first_name }} {{ review.coach.last_name }}</p>
-                            <p>{{ review.content }}</p>
+                            <p>{{ review.content }} ({{ review.updated_at }})</p>
                             <a href="{% url 'update_review' review.id %}"><button>Update Review <i class="fas fa-edit"></i></button></a>
                             <a href="{% url 'delete_review' review.id %}"><button>Delete Review <i class="fas fa-trash-alt"></i></button></a>
                         </li>

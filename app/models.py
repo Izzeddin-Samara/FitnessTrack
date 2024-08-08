@@ -115,6 +115,10 @@ def existing_review(request):
     coach = get_object_or_404(Coach, id=coach_id)
     return Review.objects.filter(coach=coach, user=user).first()
 
+def update_review(request, review_id): 
+    review = get_object_or_404(Review, id=review_id)
+    review.content = request.POST['content']
+    review.save()
 
     
 

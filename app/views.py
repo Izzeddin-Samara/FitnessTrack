@@ -114,15 +114,13 @@ def create_review(request, coach_id):
         return redirect('/user_dashboard')
     return redirect('/')
 
-# Update review view
-def update_review(request, review_id):
-    review = get_object_or_404(models.Review, id=review_id)
+def update_review(request, review_id):  # Use review_id instead of id
     if request.method == 'POST':
-        review.content = request.POST['content']
-        review.save()
-        messages.success(request, f"Review updated successfully for coach {review.coach.first_name} {review.coach.last_name}")
+        models.update_review(request, review_id)  # Pass review_id to the model function
         return redirect('/user_dashboard')
-    return render(request, 'update_review.html', {'review': review, 'coach_name': f"{review.coach.first_name} {review.coach.last_name}"})
+    else:
+        review = get_object_or_404(Review, id=review_id)
+        return render(request, 'update_review.html', {'review': review})
 
 # Delete review view
 def delete_review(request, review_id):
