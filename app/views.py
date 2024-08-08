@@ -64,19 +64,9 @@ def new_session(request, coach_id):
 # Create session view
 def create_session(request, coach_id):
     if request.method == 'POST':
-        user_id = request.session['userid']
-        date = request.POST['date']
-        duration = request.POST['duration']  # Use the selected value
-        
+        request.session['coachid'] = coach_id
+        models.create_session(request)
         coach = models.get_coach(coach_id)
-        user = models.get_user(user_id)
-        
-        session = models.Session.objects.create(
-            coach=coach,
-            user=user,
-            date=date,
-            duration=duration
-        )
         messages.success(request, f"Session created successfully with coach {coach.first_name} {coach.last_name}")
         return redirect('/user_dashboard')
     return redirect('/')
