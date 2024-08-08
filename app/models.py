@@ -99,6 +99,12 @@ def create_session(request):
     session = Session.objects.create(date=date, duration=duration, user=user, coach=coach)
     return session
 
+def update_session(request, session_id): 
+    session = get_object_or_404(Session, id=session_id)
+    session.date = request.POST['date']
+    session.duration= request.POST['duration']
+    session.save()
+
 def add_review(request):
     user_id = request.session['userid']
     coach_id = request.session['coachid']
@@ -119,6 +125,8 @@ def update_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     review.content = request.POST['content']
     review.save()
+
+
 
     
 

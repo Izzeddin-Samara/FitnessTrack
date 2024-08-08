@@ -72,15 +72,13 @@ def create_session(request, coach_id):
     return redirect('/')
 
 # Update session view
-def update_session(request, session_id):
-    session = get_object_or_404(models.Session, id=session_id)
+def update_session(request, session_id):  # Use review_id instead of id
     if request.method == 'POST':
-        session.date = request.POST['date']
-        session.duration = request.POST['duration']
-        session.save()
-        messages.success(request, f"Session updated successfully with coach {session.coach.first_name} {session.coach.last_name}")
+        models.update_session(request, session_id)  # Pass review_id to the model function
         return redirect('/user_dashboard')
-    return render(request, 'update_session.html', {'session': session, 'coach_name': f"{session.coach.first_name} {session.coach.last_name}"})
+    else:
+        session = get_object_or_404(Session, id=session_id)
+        return render(request, 'update_session.html', {'session': session})
 
 # Delete session view
 def delete_session(request, session_id):
@@ -114,9 +112,10 @@ def create_review(request, coach_id):
         return redirect('/user_dashboard')
     return redirect('/')
 
-def update_review(request, review_id):  # Use review_id instead of id
+# update_review view
+def update_review(request, review_id):
     if request.method == 'POST':
-        models.update_review(request, review_id)  # Pass review_id to the model function
+        models.update_review(request, review_id) 
         return redirect('/user_dashboard')
     else:
         review = get_object_or_404(Review, id=review_id)
@@ -136,11 +135,14 @@ def logout_user(request):
     messages.success(request, "You have been logged out successfully.")
     return redirect('/')
 
+#display about us
 def about_us(request):
     return render(request, 'about_us.html')
 
+#display terms of use
 def terms_of_use(request):
     return render(request, 'terms.html')
 
+# display privacy of policy
 def privacy_policy(request):
     return render(request, 'privacy_policy.html')
