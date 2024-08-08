@@ -74,10 +74,17 @@ def add_user(postData):
 def get_user(user_id):
     return get_object_or_404(User, id=user_id)
 
-def get_coach(coach_id):
-    return get_object_or_404(Coach, id=coach_id)
 
 def show_all_coaches(request):
     return Coach.objects.all()
+
+def user_sessions(user_id):
+        user = get_object_or_404(User, id=user_id)
+        return Session.objects.filter(user=user).select_related('coach')
+
+def user_reviews(user_id):
+        user = get_object_or_404(User, id=user_id)
+        return Review.objects.filter(user=user).select_related('coach')
+
 
 

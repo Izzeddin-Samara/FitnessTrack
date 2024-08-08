@@ -45,9 +45,9 @@ def user_dashboard(request):
     if 'userid' in request.session:
         user_id = request.session['userid']
         user = models.get_user(user_id)
-        user_sessions = Session.objects.filter(user=user).select_related('coach')
-        user_reviews = Review.objects.filter(user=user).select_related('coach')
-        all_the_coaches = Coach.objects.all()
+        user_sessions = models.user_sessions(user_id)
+        user_reviews = models.user_reviews(user_id)
+        all_the_coaches = models.show_all_coaches(request)
         return render(request, 'user_dashboard.html', {
             'user': user,
             'user_sessions': user_sessions,
