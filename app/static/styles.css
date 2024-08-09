@@ -181,6 +181,23 @@ body.leave-review, body.update-review {
     margin-left: 10px;
     margin-bottom: 10px;
 }
+#btn-delete {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.btn-delete i {
+    margin-left: 5px;
+}
 
 /* Responsive adjustments */
 @media (max-width: 1200px) {

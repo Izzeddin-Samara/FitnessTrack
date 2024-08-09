@@ -7,6 +7,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     background-size: cover; /* Adjust background size to cover the entire page */
+
 }
 
 .container {
@@ -17,6 +18,7 @@ body {
     max-width: 400px; /* Increased width for larger container */
     width: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
 }
 
 .left-section {

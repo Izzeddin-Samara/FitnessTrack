@@ -4,65 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome for icons -->
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
 </head>
-<body class="user-dashboard">
-    <header class="header">
-        <h1>FitnessTrack</h1>
-        <div class="user-info">
-            <form method="post" action="{% url 'logout_user' %}" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" id="logout-button">Logout <i class="fas fa-sign-out-alt"></i></button>
-            </form>
+<body class="bg-light">
+    <header class="bg-dark text-white p-3 mb-4">
+        <div class="container d-flex justify-content-between align-items-center">
+            <h1 class="mb-0">FitnessTrack</h1>
+            <div class="user-info">
+                <form method="post" action="{% url 'logout_user' %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        Logout <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </form>
+            </div>
         </div>
     </header>
+
     <div class="container">
-        <h1>Welcome, {{ user.first_name }}!</h1>
-        <div class="main-content">
-            <section class="sessions-section">
-                <h2>Your Sessions <i class="fas fa-calendar-alt"></i></h2>
-                <ul class="session-list">
-                    {% for session in user_sessions %}
-                        <li>
-                            <p>{{ session.coach.first_name }} {{ session.coach.last_name }}</p>
-                            <p>{{ session.date }} - {{ session.duration }}</p>
-                            <a href="{% url 'update_session' session.id %}"><button>Update Session <i class="fas fa-edit"></i></button></a>
-                            <a href="{% url 'delete_session' session.id %}"><button>Delete Session <i class="fas fa-trash-alt"></i></button></a>
-                        </li>
-                    {% endfor %}
-                </ul>
+        <h2 class="mb-4">Welcome, {{ user.first_name }}!</h2>
+
+        <div class="row">
+            <!-- Sessions Section -->
+            <section class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Your Sessions <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for session in user_sessions %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="mb-1 font-weight-bold">{{ session.coach.first_name }} {{ session.coach.last_name }}</p>
+                                        <p class="mb-0">{{ session.date }} - {{ session.duration }}</p>
+                                    </div>
+                                    <div>
+                                        <a href="{% url 'update_session' session.id %}" class="btn btn-info btn-sm">
+                                            Update <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form method="post" action="{% url 'delete_session' session.id %}" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                Delete <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </li>
+                            {% empty %}
+                                <li class="list-group-item">No sessions available.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             </section>
 
-            <section class="reviews-section">
-                <h2>Your Reviews <i class="fas fa-comments"></i></h2>
-                <ul class="review-list">
-                    {% for review in user_reviews %}
-                        <li>
-                            <p>{{ review.coach.first_name }} {{ review.coach.last_name }}</p>
-                            <p>{{ review.content }} ({{ review.updated_at }})</p>
-                            <a href="{% url 'update_review' review.id %}"><button>Update Review <i class="fas fa-edit"></i></button></a>
-                            <a href="{% url 'delete_review' review.id %}"><button>Delete Review <i class="fas fa-trash-alt"></i></button></a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </section>
-
-            <section class="coaches-section">
-                <h2>Available Coaches <i class="fas fa-users"></i></h2>
-                <ul class="coach-list">
-                    {% for coach in all_the_coaches %}
-                        <li>
-                            <h3>{{ coach.first_name }} {{ coach.last_name }}</h3>
-                            <p>{{ coach.bio }}</p>
-                            <a href="{% url 'new_session' coach.id %}"><button>Book Session <i class="fas fa-calendar-plus"></i></button></a>
-                            <a href="{% url 'review_form' coach.id %}"><button>Leave Review <i class="fas fa-comment-alt"></i></button></a>
-                        </li>
-                    {% endfor %}
-                </ul>
+            <!-- Reviews Section -->
+            <section class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        Your Reviews <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            {% for review in user_reviews %}
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="mb-1 font-weight-bold">{{ review.coach.first_name }} {{ review.coach.last_name }}</p>
+                                        <p class="mb-0">{{ review.content }} <small class="text-muted">({{ review.updated_at }})</small></p>
+                                    </div>
+                                    <div>
+                                        <a href="{% url 'update_review' review.id %}" class="btn btn-info btn-sm">
+                                            Update <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{% url 'delete_review' review.id %}" class="btn btn-danger btn-sm">
+                                            Delete <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            {% empty %}
+                                <li class="list-group-item">No reviews available.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
             </section>
         </div>
+
+        <!-- Available Coaches Section -->
+        <section class="mb-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    Available Coaches <i class="fas fa-users"></i>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        {% for coach in all_the_coaches %}
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ coach.first_name }} {{ coach.last_name }}</h5>
+                                        <p class="card-text">{{ coach.bio }}</p>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <a href="{% url 'new_session' coach.id %}" class="btn btn-primary btn-sm">
+                                            Book Session <i class="fas fa-calendar-plus"></i>
+                                        </a>
+                                        <a href="{% url 'review_form' coach.id %}" class="btn btn-secondary btn-sm">
+                                            Leave Review <i class="fas fa-comment-alt"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p class="col">No coaches available.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -5,6 +5,9 @@ import bcrypt
 from django.contrib.auth import logout
 from .models import Session, Review, Coach, User
 
+def home(request):
+    all_the_coaches = models.show_all_coaches(request)
+    return render(request, 'home.html', {'all_the_coaches': all_the_coaches})
 # Index view
 def index(request):
     return render(request, 'index.html')
@@ -59,17 +62,24 @@ def user_dashboard(request):
 # New session view
 def new_session(request, coach_id):
     coach = models.get_coach(coach_id)
-    return render(request, 'session_form.html', {'coach_id': coach_id, 'coach_name': f"{coach.first_name} {coach.last_name}"})
+    return render(request, 'session_form.html', {'coach_id': coach_id,})
 
 # Create session view
 def create_session(request, coach_id):
+    # Get the coach object using the coach_id
+    coach = get_object_or_404(Coach, id=coach_id)
+    
     if request.method == 'POST':
         request.session['coachid'] = coach_id
         models.create_session(request)
-        coach = models.get_coach(coach_id)
-        messages.success(request, f"Session created successfully with coach {coach.first_name} {coach.last_name}")
         return redirect('/user_dashboard')
-    return redirect('/')
+    
+    # Pass the entire coach object to the template
+    context = {
+        'coach': coach,
+        'coach_id': coach_id
+    }
+    return render(request, 'create_session.html', context)
 
 # Update session view
 def update_session(request, session_id):  # Use review_id instead of id
@@ -124,9 +134,7 @@ def update_review(request, review_id):
 # Delete review view
 def delete_review(request, review_id):
     review = get_object_or_404(models.Review, id=review_id)
-    coach_name = f"{review.coach.first_name} {review.coach.last_name}"
     review.delete()
-    messages.success(request, f"Review for coach {coach_name} deleted successfully")
     return redirect('/user_dashboard')
 
 # Logout view
